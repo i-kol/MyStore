@@ -1,6 +1,9 @@
 package com.example.mystore.controllers;
 
+import com.example.mystore.models.Cart;
 import com.example.mystore.models.Person;
+import com.example.mystore.models.Product;
+import com.example.mystore.repositories.CartRepository;
 import com.example.mystore.repositories.ProductRepository;
 import com.example.mystore.security.PersonDetails;
 import com.example.mystore.services.PersonService;
@@ -14,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -22,12 +28,14 @@ public class MainController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final CartRepository cartRepository;
 
-    public MainController(PersonValidator personValidator, PersonService personService, ProductService productService, ProductRepository productRepository) {
+    public MainController(PersonValidator personValidator, PersonService personService, ProductService productService, ProductRepository productRepository, CartRepository cartRepository) {
         this.personValidator = personValidator;
         this.personService = personService;
         this.productService = productService;
         this.productRepository = productRepository;
+        this.cartRepository = cartRepository;
     }
 
     @GetMapping("/personalAccount")
@@ -107,6 +115,62 @@ public class MainController {
         model.addAttribute("value_price_ot", ot);
         model.addAttribute("value_price_do", Do);
         return "/product/product";
+    }
 
+    @GetMapping("/cart/add/{id}")
+    public String addProductInCart(@PathVariable("id") int id, Model model){
+        // Получаем продукт по id
+        Product product = productService.getProductId(id);
+        // Извлекаем объект аутентифицированного пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        // Извлекаем id пользователя из объекта
+        int id_person = personDetails.getPerson().getId();
+        Cart cart = new Cart(id_person, product.getId());
+        cartRepository.save(cart);
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        // Извлекаем id пользователя из объекта
+        int id_person = personDetails.getPerson().getId();
+
+        List<Cart> cartList = cartRepository.findByPersonId(id_person);
+        List<Product> productList = new ArrayList<>();
+
+        // Получаем продукты из корзины по id товара
+        for (Cart cart: cartList) {
+            productList.add(productService.getProductId(cart.getProductId()));
+        }
+
+        // Вычисление итоговой цена
+        float price = 0;
+        for (Product product: productList) {
+            price += product.getPrice();
+        }
+
+        model.addAttribute("price", price);
+        model.addAttribute("cart_product", productList);
+        return "/user/cart";
+    }
+
+    @GetMapping("/cart/delete/{id}")
+    public String deleteProductFromCart(Model model, @PathVariable("id") int id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        // Извлекаем id пользователя из объекта
+        int id_person = personDetails.getPerson().getId();
+        List<Cart> cartList = cartRepository.findByPersonId(id_person);
+        List<Product> productList = new ArrayList<>();
+
+        // Получаем продукты из корзины по id товара
+        for (Cart cart: cartList) {
+            productList.add(productService.getProductId(cart.getProductId()));
+        }
+        cartRepository.deleteCartByProductId(id);
+        return "redirect:/cart";
     }
 }
