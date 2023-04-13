@@ -1,9 +1,12 @@
 package com.example.mystore.controllers;
 
+import com.example.mystore.enumm.Status;
 import com.example.mystore.models.Cart;
+import com.example.mystore.models.Order;
 import com.example.mystore.models.Person;
 import com.example.mystore.models.Product;
 import com.example.mystore.repositories.CartRepository;
+import com.example.mystore.repositories.OrderRepository;
 import com.example.mystore.repositories.ProductRepository;
 import com.example.mystore.security.PersonDetails;
 import com.example.mystore.services.PersonService;
@@ -19,23 +22,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class MainController {
+
+    private final ProductRepository productRepository;
 
     private final PersonValidator personValidator;
     private final PersonService personService;
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
+
     private final CartRepository cartRepository;
 
-    public MainController(PersonValidator personValidator, PersonService personService, ProductService productService, ProductRepository productRepository, CartRepository cartRepository) {
+    private final OrderRepository orderRepository;
+
+    public MainController(ProductRepository productRepository, PersonValidator personValidator, PersonService personService, ProductService productService, CartRepository cartRepository, OrderRepository orderRepository) {
+        this.productRepository = productRepository;
         this.personValidator = personValidator;
         this.personService = personService;
         this.productService = productService;
-        this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/personalAccount")
@@ -47,9 +56,20 @@ public class MainController {
         if(role.equals("ROLE_ADMIN")){
             return "redirect:/admin";
         }
+//        System.out.println(personDetails.getPerson());
+//        System.out.println("ID пользователя: " + personDetails.getPerson().getId());
+//        System.out.println("Логин пользователя: " + personDetails.getPerson().getLogin());
+//        System.out.println("Пароль пользователя: " + personDetails.getPerson().getPassword());
+//        System.out.println(personDetails);
         model.addAttribute("products", productService.getAllProduct());
         return "/user/index";
     }
+
+    //    @GetMapping("/registration")
+//    public String registration(Model model){
+//        model.addAttribute("person", new Person());
+//        return "registration";
+//    }
 
     @GetMapping("/registration")
     public String registration(@ModelAttribute("person") Person person){
@@ -63,7 +83,7 @@ public class MainController {
             return "registration";
         }
         personService.register(person);
-        return "redirect:/personalAccount";
+        return "redirect:/person account";
     }
 
     @GetMapping("/personalAccount/product/info/{id}")
@@ -115,6 +135,7 @@ public class MainController {
         model.addAttribute("value_price_ot", ot);
         model.addAttribute("value_price_do", Do);
         return "/product/product";
+
     }
 
     @GetMapping("/cart/add/{id}")
@@ -173,4 +194,45 @@ public class MainController {
         cartRepository.deleteCartByProductId(id);
         return "redirect:/cart";
     }
+
+    @GetMapping("/order/create")
+    public String order(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        // Извлекаем id пользователя из объекта
+        int id_person = personDetails.getPerson().getId();
+
+        List<Cart> cartList = cartRepository.findByPersonId(id_person);
+        List<Product> productList = new ArrayList<>();
+
+        // Получаем продукты из корзины по id товара
+        for (Cart cart: cartList) {
+            productList.add(productService.getProductId(cart.getProductId()));
+        }
+
+        // Вычисление итоговой цена
+        float price = 0;
+        for (Product product: productList) {
+            price += product.getPrice();
+        }
+
+        String uuid = UUID.randomUUID().toString();
+        for(Product product : productList){
+            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Оформлен);
+            orderRepository.save(newOrder);
+            cartRepository.deleteCartByProductId(product.getId());
+        }
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/orders")
+    public String orderUser(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        List<Order> orderList = orderRepository.findByPerson(personDetails.getPerson());
+        model.addAttribute("orders", orderList);
+        return "/user/orders";
+    }
+
+
 }

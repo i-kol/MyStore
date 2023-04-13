@@ -31,6 +31,9 @@ public class Person {
     @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "person_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> peroductList;
 
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    private List<Order> orderList;
+
     public int getId() {
         return id;
     }

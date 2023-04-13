@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование пользователя</title>
+</head>
+<body>
+<h3>Редактирование пользователя</h3>
+<form method="POST" th:action="@{/admin/person/edit/{id}(id=${editPerson.getId()})}" th:object="${editPerson}">
+
+  <div class="mb-3" style="width:500px">
+
+    <tr>
+      <label for="login" class="form-label" >Введите логин: </label>
+      <input type="text" class="form-control" th:field="*{login}" id="login">
+      <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+      <br>
+
+      <label for="password" class="form-label">Введите пароль: </label>
+      <input type="text" class="form-control" th:field="*{password}" id="password">
+      <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+      <br>
+
+      <label for="role" class="form-label">Введите роль: </label>
+
+      <input type="text" class="form-control" th:field="*{role}" id="role">
+      <div style="color: red" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+      <br>
+
+  </div>
+
+  <input type="submit" value="Редактировать">
+
+</form>
+</body>
+</html>

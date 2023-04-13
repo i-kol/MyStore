@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Список пользователей</h3>
+<div th:each="element : ${person}">
+  <ol>
+    <a aria-current="page" th:href="@{/admin/person/info/{id}(id=${element.getId()})}" th:text="${element.getLogin()}"></a>
+  </ol>
+</div>
+</body>
+</html>

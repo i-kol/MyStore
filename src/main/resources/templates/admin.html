@@ -9,8 +9,19 @@
 <form method="post" th:action="@{/logout}">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
   <button type="submit">Выйти из личного кабинета</button><br>
-<a href="admin/product/add">Добавить товар</a>
 </form>
+
+  <div class="grid">
+    <div class="item">
+      <a style="text-decoration: none" href="/admin/product/add">Добавить товар</a>
+    </div>
+    <div class="item">
+      <a style="text-decoration: none" href="/admin/person">Пользователи</a>
+    </div>
+    <div class="item">
+      <a style="text-decoration: none;" href="/admin/orders">Заказы</a>
+    </div>
+
 <hr>
 <div th:each="product : ${products}">
   <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
