@@ -39,12 +39,13 @@ public class OrderService {
 
     }
 
+    // Данный метод позволяет обновить статус заказа
     @Transactional
     public void updateOrderStatus(Order order) {
         orderRepository.save(order);
     }
 
-    //    @Transactional
+    // Данный метод позволяет получить заказ из репозитория по id
     public Order getOrderById(int id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
         return optionalOrder.orElse(null);

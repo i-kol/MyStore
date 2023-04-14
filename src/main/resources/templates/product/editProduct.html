@@ -41,6 +41,14 @@
   <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
   <br>
   <br>
+  <p style="color: red">Вы можете фотографии товара. Первая фотография не может быть пустой т.к она будет являтся главной при выводе карточки товара</p>
+  <input type="file" name="file_one">
+  <input type="file" name="file_two">
+  <input type="file" name="file_three">
+  <input type="file" name="file_four">
+  <input type="file" name="file_five">
+  <br>
+  <br>
   <input type="submit" value="Сохранить изменения">
 </form>
 </body>

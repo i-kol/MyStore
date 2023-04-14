@@ -31,8 +31,9 @@ public class ProductService {
 
     // Данный метод позволяет сохранить товар
     @Transactional
-    public void saveProduct(Product product, Category category){
-        product.setCategory(category);
+    public void saveProduct(Product product, Category category_db){
+
+//        product.setCategory(category);
         productRepository.save(product);
     }
 
@@ -47,5 +48,11 @@ public class ProductService {
     @Transactional
     public void deleteProduct(int id){
         productRepository.deleteById(id);
+    }
+
+    // Данный метод позволит получить товар по наименованию
+    public Product  getProductFindByTitle(Product product){
+        Optional<Product> product_db = productRepository.findByTitle(product.getTitle());
+        return product_db.orElse(null);
     }
 }

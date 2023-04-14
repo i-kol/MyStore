@@ -6,6 +6,9 @@
 </head>
 <body>
 <h3>Заказы</h3>
+<form th:action="@{/personalAccount}">
+  <button type="submit">В кабинет пользователя</button><br>
+</form>
 <div th:each="order : ${orders}">
   <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
   <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">

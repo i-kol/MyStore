@@ -6,6 +6,9 @@
 </head>
 <body>
 <h3>Информация о товаре: </h3>
+<form th:action="@{/product}">
+  <button type="submit">На главную страницу</button><br>
+</form>
 <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
 <p th:text="'Описание: ' + ${product.getDescription()}"></p>
 <p th:text="'Цена: ' + ${product.getPrice()}"></p>

@@ -71,6 +71,12 @@ public class ProductController {
         model.addAttribute("value_search", search);
         model.addAttribute("value_price_ot", ot);
         model.addAttribute("value_price_do", Do);
+        model.addAttribute("sorted_by_ascending_price", price);
+        model.addAttribute("sorted_by_descending_price",price);
+        model.addAttribute("furniture",contract);
+        model.addAttribute("appliances",contract);
+        model.addAttribute("clothes",contract);
+        model.addAttribute("products", productService.getAllProduct());
         return "/product/product";
     }
 }

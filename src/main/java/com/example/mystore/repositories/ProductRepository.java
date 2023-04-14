@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -32,4 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     // Поиск по наименованию и фильтрация по диапазону цены, сортировка по убыванию цены, а также фильтрация по категории
     @Query(value = "select * from product where category_id = ?4 and(lower(title) LIKE %?1%) or (lower(title) LIKE '?1%') OR (lower(title) LIKE '%?1') and (price >= ?2 and price <= ?3) order by price desc",nativeQuery = true)
     List<Product> findByTitleAndCategoryOrderByPriceDesc(String title, float ot, float Do, int category);
+
+    Optional<Product> findByTitle(String title);
 }

@@ -56,20 +56,9 @@ public class MainController {
         if(role.equals("ROLE_ADMIN")){
             return "redirect:/admin";
         }
-//        System.out.println(personDetails.getPerson());
-//        System.out.println("ID пользователя: " + personDetails.getPerson().getId());
-//        System.out.println("Логин пользователя: " + personDetails.getPerson().getLogin());
-//        System.out.println("Пароль пользователя: " + personDetails.getPerson().getPassword());
-//        System.out.println(personDetails);
         model.addAttribute("products", productService.getAllProduct());
         return "/user/index";
     }
-
-    //    @GetMapping("/registration")
-//    public String registration(Model model){
-//        model.addAttribute("person", new Person());
-//        return "registration";
-//    }
 
     @GetMapping("/registration")
     public String registration(@ModelAttribute("person") Person person){
@@ -83,7 +72,7 @@ public class MainController {
             return "registration";
         }
         personService.register(person);
-        return "redirect:/person account";
+        return "redirect:/personalAccount";
     }
 
     @GetMapping("/personalAccount/product/info/{id}")
@@ -134,8 +123,13 @@ public class MainController {
         model.addAttribute("value_search", search);
         model.addAttribute("value_price_ot", ot);
         model.addAttribute("value_price_do", Do);
+        model.addAttribute("sorted_by_ascending_price", price);
+        model.addAttribute("sorted_by_descending_price",price);
+        model.addAttribute("furniture",contract);
+        model.addAttribute("appliances",contract);
+        model.addAttribute("clothes",contract);
+        model.addAttribute("products", productService.getAllProduct());
         return "/product/product";
-
     }
 
     @GetMapping("/cart/add/{id}")
@@ -225,6 +219,7 @@ public class MainController {
         return "redirect:/orders";
     }
 
+    // Получение списка заказов авторизованного пользователя
     @GetMapping("/orders")
     public String orderUser(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -233,6 +228,4 @@ public class MainController {
         model.addAttribute("orders", orderList);
         return "/user/orders";
     }
-
-
 }

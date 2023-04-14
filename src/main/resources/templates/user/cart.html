@@ -6,6 +6,10 @@
 </head>
 <body>
 <h3>Корзина товаров</h3>
+<form th:action="@{/personalAccount}">
+  <button type="submit">В кабинет пользователя</button><br>
+</form>
+<hr>
 <div th:each="product : ${cart_product}">
   <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
   <br>

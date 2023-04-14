@@ -2,10 +2,11 @@ package com.example.mystore.services;
 
 import com.example.mystore.models.Person;
 import com.example.mystore.repositories.PersonRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,20 +45,20 @@ public class PersonService {
         return optionalPerson.orElse(null);
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public void updatePerson(int id, Person person){
         person.setId(id);
         personRepository.save(person);
     }
 
     // Данный метод позволяет удалить пользовател по id
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public void deletePerson(int id){
         personRepository.deleteById(id);
     }
 
     //Данный метод позволяет сменить пароль у пользовател с конкретным id
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public void changePassword(int id, String password){
         personRepository.updatePersonById(id, passwordEncoder.encode(password));
     }
@@ -65,4 +66,5 @@ public class PersonService {
     public List<Person> getAllPersons(){
         return personRepository.findAll();
     }
+
 }

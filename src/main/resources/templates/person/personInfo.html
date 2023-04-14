@@ -7,7 +7,6 @@
 <body>
 <h3>Информация о пользователе</h3>
 <p th:text="'Логин: ' + ${person.getLogin()}"/>
-<p th:text="'Пароль: ' + ${person.getPassword()}"/>
 <p th:text="'Роль: ' + ${person.getRole()}"/>
 
 <a th:href="@{/admin/person/edit/{id}(id=${person.getId()})}">Редактировать пользователя</a>

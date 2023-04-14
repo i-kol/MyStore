@@ -5,7 +5,7 @@
     <title>Информация о заказе</title>
 </head>
 <body>
-<div class="info" style="max-width: 600px">
+<div class="info" style="max-width: 800px">
   <form th:method="POST" th:action="@{/admin/orders/{id}(id=${info_order.getId()})}" th:object="${info_order}">
 
     <div th:each="order:${info_order}">
@@ -14,7 +14,7 @@
 
       <label for="status" >Выберите статус: </label>
       <select id="status" name="status">
-        <option th:each="state : ${T(com.example.springsecurityapplication.enumm.Status).values()}"
+        <option th:each="state : ${T(com.example.mystore.enumm.Status).values()}"
                 th:value="${state}" th:text="${state}"></option>
       </select>
       <button type="submit">Редактировать</button>
@@ -23,7 +23,7 @@
 
   </form>
   <div class="watch_product">
-    <a class="link" style="text-decoration: none;" href="/product">Просмотр товаров</a>
+    <a class="link" style="text-decoration: none;" href="/admin/orders">Назад к списку заказов</a>
   </div>
 </div>
 </body>
