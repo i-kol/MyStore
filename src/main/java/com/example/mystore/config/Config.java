@@ -14,7 +14,7 @@ public class Config implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/img/**")
+                .addResourceHandler("/pics/**")
                 .addResourceLocations("file:///" + uploadPath + "/");
     }
 }

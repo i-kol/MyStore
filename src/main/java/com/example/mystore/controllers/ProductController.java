@@ -79,4 +79,16 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProduct());
         return "/product/product";
     }
+
+    // Метод для поиска по части наименования (для header)
+    @PostMapping("/searchHeader")
+    public String productSearchHeader(@RequestParam("search") String search, Model model) {
+        model.addAttribute("products", productService.getAllProduct());
+        model.addAttribute("search_product_header", productRepository.findByTitleContainingIgnoreCase(search));
+        model.addAttribute("value_search", search);
+        model.addAttribute("products", productService.getAllProduct());
+        return "/product/product";
+    }
 }
+
+

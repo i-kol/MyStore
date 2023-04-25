@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Редактирование товара</title>
+  <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h3>Редактирование товара</h3>
@@ -28,11 +29,17 @@
   <br>
   <br>
   <label for="category">Выберите категорию товара: </label>
+
+
+
   <select name="category" th:field="*{category}" id="category">
     <div th:each="element : ${category}">
       <option th:text="${element.getName()}" th:value="${element.getId()}">
     </div>
   </select>
+
+
+
   <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
   <br>
   <br>
@@ -41,7 +48,7 @@
   <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
   <br>
   <br>
-  <p style="color: red">Вы можете фотографии товара. Первая фотография не может быть пустой т.к она будет являтся главной при выводе карточки товара</p>
+  <p style="color: red">Вы можете заменить фотографии товара. Первая фотография не может быть пустой т.к она будет являтся главной при выводе карточки товара</p>
   <input type="file" name="file_one">
   <input type="file" name="file_two">
   <input type="file" name="file_three">

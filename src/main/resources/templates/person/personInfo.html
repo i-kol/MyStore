@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Информация о пользователе</title>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h3>Информация о пользователе</h3>
 <p th:text="'Логин: ' + ${person.getLogin()}"/>
 <p th:text="'Роль: ' + ${person.getRole()}"/>
-
+<br>
 <a th:href="@{/admin/person/edit/{id}(id=${person.getId()})}">Редактировать пользователя</a>
-<a th:href="@{/admin/person/delete/{id}(id=${person.getId()})}">Удалить пользователя</a>
+<br>
+<br>
+<a style="color: red" th:href="@{/admin/person/delete/{id}(id=${person.getId()})}">Удалить пользователя</a>
 
 </body>
 </html>

@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Регистрация</title>
+  <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
+
 <h3>Регистрация</h3>
+
+<div class="headerMenu">
+  <ul class="navigation">
+    <div>
+      <a th:href="@{/product}">
+        <img class="logo" th:src="@{/images/logo.png}">
+      </a>
+    </div>
+    <li><a href="/authentication">Авторизация</a></li>
+    <li><a href="/product">Каталог</a></li>
+  </ul>
+</div>
+
 <form method="post" th:actioin="@{/registration}" th:object="${person}">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
   <label for="login">Введите логин: </label>
@@ -16,14 +31,8 @@
   <input type="password" th:field="*{password}" id="password">
   <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
   <br>
-  <input type="submit" value="Зарегистрироваться">
+  <button type="submit">Зарегистрироваться</button>
 </form>
-<br>
-<a href="/authentication">Вход</a>
-<br>
-<form th:action="@{/product}">
-  <button type="submit">Каталог</button><br>
-*вы можете посмотреть каталог товаров без регистрации
-</form>
+
 </body>
 </html>

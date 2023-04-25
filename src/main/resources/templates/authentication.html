@@ -6,7 +6,21 @@
   <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
-<h3>Вход</h3>
+<h3>Войдите в личный кабинет или перейдите в каталог для незарегистрированных пользователей</h3>
+
+<div class="headerMenu">
+  <ul class="navigation">
+<div class="logoA">
+  <a href="/product">
+      <img class="logo" th:src="@{/images/logo.png}">
+  </a>
+</div>
+    <li><a href="/registration">Регистрация</a></li>
+    <li><a href="/product">Каталог</a></li>
+  </ul>
+</div>
+
+<div>
 <form method="post" action="/process_login">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
   <label for="username">Введите логин: </label>
@@ -14,16 +28,14 @@
   <br>
   <label for="password">Введите пароль: </label>
   <input type="password" placeholder="Введите пароль" name="password" id="password">
-  <input type="submit" value="Войти">
+  <br>
+  <button type="submit">Войти</button>
 </form>
+</div>
+
+
 <div th:if="${param.error}" style="color: red">
   Неправильный логин или пароль
 </div>
-<a href="/registration">Зарегистрироваться</a>
-<br>
-<form th:action="@{/product}">
-  <button type="submit">Каталог</button><br>
-*вы можете посмотреть каталог товаров без входа в аккаунт
-</form>
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Корзина</title>
+  <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/cart.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h3>Корзина товаров</h3>
@@ -11,14 +13,17 @@
 </form>
 <hr>
 <div th:each="product : ${cart_product}">
-  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+  <img class="cartImg" th:src="'/pics/' + ${product.imageList[0].getFileName()}">
   <br>
   <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
   <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
-  <hr>
+  <a class="cartA" th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить товар из корзины</a><br>
+  <br>
 </div>
 <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
-<a href="/order/create">Оформить заказ</a>
+<br>
+<form th:action="@{/order/create}">
+  <button type="submit">Оформить заказ</button><br>
+</form>
 </body>
 </html>

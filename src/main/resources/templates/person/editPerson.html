@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Редактирование пользователя</title>
+  <meta charset="UTF-8">
+  <title>Редактирование пользователя</title>
 </head>
-<body>
-<h3>Редактирование пользователя</h3>
+<body style="background-color: #69bff8">
+<h3>Редактирование пользователей</h3>
 <form method="POST" th:action="@{/admin/person/edit/{id}(id=${editPerson.getId()})}" th:object="${editPerson}">
 
   <div class="mb-3" style="width:500px">
