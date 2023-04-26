@@ -178,7 +178,7 @@ input{
 
 .searchPlusBanner{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 50% 40%;
     margin-left: 50px;
 }
 

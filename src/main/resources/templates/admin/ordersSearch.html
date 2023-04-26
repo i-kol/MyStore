@@ -12,6 +12,8 @@
     <a th:href="@{/admin/orders/{id}(id=${order.getId()})}" th:text="${order.getNumber()}"></a>
 </div>
 </form>
+<br>
+<br>
 <form th:action="@{/admin/orders}">
     <button>К списку заказов</button><br>
 </form>

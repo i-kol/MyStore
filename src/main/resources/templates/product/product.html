@@ -83,7 +83,9 @@
 
 <div class="productListDiv">
   <div class="productDiv" th:each="product : ${search_product_header}">
-    <img th:src="'/pics/' + ${product.imageList[0].getFileName()}" width="300px">
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}">
+      <img th:src="'/pics/' + ${product.imageList[0].getFileName()}" width="300px">
+    </a>
     <br>
     <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
@@ -92,11 +94,12 @@
 
 <div class="productListDiv">
   <div class="productDiv" th:each="product : ${search_product}">
-    <img th:src="'/pics/' + ${product.imageList[0].getFileName()}" width="300px">
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}">
+      <img th:src="'/pics/' + ${product.imageList[0].getFileName()}" width="300px">
+    </a>
     <br>
     <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-    <hr>
   </div>
 </div>
 

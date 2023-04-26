@@ -209,132 +209,21 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    // Метод по получению товара по id и отображение шаблона редактирования
     @GetMapping("/product/edit/{id}")
     public String editProduct(Model model, @PathVariable("id") int id){
         model.addAttribute("product", productService.getProductId(id));
         model.addAttribute("category", categoryRepository.findAll());
         return "product/editProduct";
+
+
     }
 
-    // Метод сохранения изменений, внесенных в шаблоне редактирования продукта по id
     @PostMapping("/product/edit/{id}")
-    public String editProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one") MultipartFile file_one, @RequestParam("file_two") MultipartFile file_two, @RequestParam("file_three") MultipartFile file_three, @RequestParam("file_four") MultipartFile file_four, @RequestParam("file_five") MultipartFile file_five, @PathVariable("id") int id, Model model) throws IOException {
-
+    public String editProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @PathVariable("id") int id, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("category", categoryRepository.findAll());
             return "product/editProduct";
         }
-
-        if(file_one != null){
-            // Дирректория по сохранению файла
-            File uploadDir = new File(uploadPath);
-            // Если данной дирректории по пути не сущетсвует
-            if(!uploadDir.exists()){
-                // Создаем данную дирректорию
-                uploadDir.mkdir();
-            }
-            // Создаем уникальное имя файла
-            // UUID представляет неизменный универсальный уникальный идентификатор
-            String uuidFile = UUID.randomUUID().toString();
-            // file_one.getOriginalFilename() - наименование файла с формы
-            String resultFileName = uuidFile + "." + file_one.getOriginalFilename();
-            // Загружаем файл по указаннопу пути
-            file_one.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageProduct(image);
-        }
-
-        // Проверка на пустоту файла
-        if(file_two != null){
-            // Дирректория по сохранению файла
-            File uploadDir = new File(uploadPath);
-            // Если данной дирректории по пути не сущетсвует
-            if(!uploadDir.exists()){
-                // Создаем данную дирректорию
-                uploadDir.mkdir();
-            }
-            // Создаем уникальное имя файла
-            // UUID представляет неизменный универсальный уникальный идентификатор
-            String uuidFile = UUID.randomUUID().toString();
-            // file_one.getOriginalFilename() - наименование файла с формы
-            String resultFileName = uuidFile + "." + file_two.getOriginalFilename();
-            // Загружаем файл по указаннопу пути
-            file_two.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageProduct(image);
-        }
-
-        // Проверка на пустоту файла
-        if(file_three != null){
-            // Дирректория по сохранению файла
-            File uploadDir = new File(uploadPath);
-            // Если данной дирректории по пути не сущетсвует
-            if(!uploadDir.exists()){
-                // Создаем данную дирректорию
-                uploadDir.mkdir();
-            }
-            // Создаем уникальное имя файла
-            // UUID представляет неищменный универсальный уникальный идентификатор
-            String uuidFile = UUID.randomUUID().toString();
-            // file_one.getOriginalFilename() - наименование файла с формы
-            String resultFileName = uuidFile + "." + file_three.getOriginalFilename();
-            // Загружаем файл по указаннопу пути
-            file_three.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageProduct(image);
-        }
-
-        // Проверка на пустоту файла
-        if(file_four != null){
-            // Дирректория по сохранению файла
-            File uploadDir = new File(uploadPath);
-            // Если данной дирректории по пути не сущетсвует
-            if(!uploadDir.exists()){
-                // Создаем данную дирректорию
-                uploadDir.mkdir();
-            }
-            // Создаем уникальное имя файла
-            // UUID представляет неищменный универсальный уникальный идентификатор
-            String uuidFile = UUID.randomUUID().toString();
-            // file_one.getOriginalFilename() - наименование файла с формы
-            String resultFileName = uuidFile + "." + file_four.getOriginalFilename();
-            // Загружаем файл по указаннопу пути
-            file_four.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageProduct(image);
-        }
-
-        // Проверка на пустоту файла
-        if(file_five != null){
-            // Дирректория по сохранению файла
-            File uploadDir = new File(uploadPath);
-            // Если данной дирректории по пути не сущетсвует
-            if(!uploadDir.exists()){
-                // Создаем данную дирректорию
-                uploadDir.mkdir();
-            }
-            // Создаем уникальное имя файла
-            // UUID представляет неищменный универсальный уникальный идентификатор
-            String uuidFile = UUID.randomUUID().toString();
-            // file_one.getOriginalFilename() - наименование файла с формы
-            String resultFileName = uuidFile + "." + file_five.getOriginalFilename();
-            // Загружаем файл по указаннопу пути
-            file_five.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageProduct(image);
-        }
-
         productService.updateProduct(id, product);
         return "redirect:/admin";
     }
