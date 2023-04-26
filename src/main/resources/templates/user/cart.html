@@ -17,7 +17,8 @@
   <br>
   <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
   <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <a class="cartA" th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить товар из корзины</a><br>
+  <a class="cartA" th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить товар из корзины</a>
+  <br>
   <br>
 </div>
 <h3 th:text="'Итоговая цена: ' + ${price}"></h3>

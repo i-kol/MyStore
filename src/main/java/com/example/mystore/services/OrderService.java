@@ -1,5 +1,6 @@
 package com.example.mystore.services;
 
+import com.example.mystore.enumm.Status;
 import com.example.mystore.models.Order;
 import com.example.mystore.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
+
 
     @Transactional
     public Order getAllOrders(int id, Order order) {
@@ -36,19 +38,22 @@ public class OrderService {
     public void updateOrder(int id, Order order) {
         order.setId(id);
         orderRepository.save(order);
-
     }
 
-    // Данный метод позволяет обновить статус заказа
     @Transactional
     public void updateOrderStatus(Order order) {
         orderRepository.save(order);
     }
 
-    // Данный метод позволяет получить заказ из репозитория по id
+    //    @Transactional
     public Order getOrderById(int id) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
         return optionalOrder.orElse(null);
     }
-}
 
+    // Данный метод позволяет удалить заказ по id
+    @Transactional
+    public void deleteOrder(int id){
+        orderRepository.deleteById(id);
+    }
+}

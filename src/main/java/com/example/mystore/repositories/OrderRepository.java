@@ -13,8 +13,4 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findByPerson(Person person);
 
     List<Order> findByNumberEndingWith(String endingWith);
-
-    // Получение списка заказов по последним символам в номере заказа
-//    @Query(value = "select * from order where number LIKE %?1, nativeQuery = true")
-//    List<Order> findByNumberEndingWith(String number);
 }

@@ -226,7 +226,6 @@ public class AdminController {
             return "product/editProduct";
         }
 
-
         if(file_one != null){
             // Дирректория по сохранению файла
             File uploadDir = new File(uploadPath);
@@ -336,8 +335,6 @@ public class AdminController {
             product.addImageProduct(image);
         }
 
-
-
         productService.updateProduct(id, product);
         return "redirect:/admin";
     }
@@ -420,5 +417,12 @@ public class AdminController {
     public String searchOrderByLastSymbols(@RequestParam("value") String value, Model model) {
         model.addAttribute("search_order",orderRepository.findByNumberEndingWith(value));
         return "/admin/ordersSearch";
+    }
+
+
+    @GetMapping("/orders/delete/{id}")
+    public String deleteOrder(@PathVariable("id") int id){
+        orderService.deleteOrder(id);
+        return "admin/ordersSearch";
     }
 }
