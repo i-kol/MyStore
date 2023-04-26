@@ -42,9 +42,11 @@
   -->
 </div>
 </div>
-<!--
+<a th:href="@{/product/info/31}">
 <img class="banner" th:src="@{/images/banner.jpg}"}>
--->
+</a>
+
+
 <div class="searchPlusBanner">
   <form th:method="POST" th:action="@{/product/search}">
   <fieldset>
@@ -75,7 +77,8 @@
     </div>
   </fieldset>
 </form>
-    <img th:src="@{/images/banner2.jpg}">
+  <!--      <video src="images/video.mov" muted poster="images/poster.png"></video>   -->
+  <iframe width="605" height="345" src="https://www.youtube.com/embed/EUbq7z8xYqY" title="Работа приложения" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 <div class="productListDiv">

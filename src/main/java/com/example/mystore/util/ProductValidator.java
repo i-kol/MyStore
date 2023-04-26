@@ -15,7 +15,7 @@ public class ProductValidator implements Validator {
         this.productService = productService;
     }
 
-    // В данно методе указываем для какой модели предназначен данные валидатор
+    // В данном методе указываем, для какой модели предназначен данный валидатор
     @Override
     public boolean supports(Class<?> clazz) {
         return Product.class.equals(clazz);

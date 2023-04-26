@@ -8,8 +8,11 @@
 <body>
 <h3>Добавление товара</h3>
 <form th:action="@{/admin}">
-    <button type="submit">Назад в меню администратора</button><br>
+    <button type="submit">Назад в меню администратора</button>
 </form>
+<br>
+<br>
+<br>
 <form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
     <label for="title">Введите наименование товара: </label>
     <input type="text" th:field="*{title}" placeholder="Наименование" id="title">

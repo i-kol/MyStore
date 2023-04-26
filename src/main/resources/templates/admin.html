@@ -9,26 +9,24 @@
 </head>
 <body>
 <h1>Личный кабинет администратора</h1>
-<form method="post" th:action="@{/logout}">
-  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-  <button type="submit">Выйти из личного кабинета</button><br>
-</form>
-<hr>
-<div>
+<div class="adminButtons">
+  <form method="post" th:action="@{/logout}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выйти из личного кабинета</button><br>
+  </form>
   <form th:action="@{/admin/product/add}">
     <button type="submit">Добавить новый товар</button><br>
   </form>
-  <br>
   <form th:action="@{/admin/person}">
     <button type="submit">Список пользователей</button><br>
   </form>
-  <br>
   <form th:action="@{/admin/orders}">
     <button type="submit">Заказы пользователей</button><br>
   </form>
 </div>
 <hr>
 
+<h3>Загруженные товары</h3>
 <div class="ordersInfo">
 <div class="orderInfo" th:each="product : ${products}">
   <img class="orderImg" th:src="'/pics/' + ${product.imageList[0].getFileName()}">

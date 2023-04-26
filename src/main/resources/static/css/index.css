@@ -172,13 +172,14 @@ input{
 }
 
 .banner{
-    width: 100%;
-    margin-bottom: 50px;
+    width: 95%;
+    margin-bottom: 30px;
 }
 
 .searchPlusBanner{
     display: grid;
     grid-template-columns: 50% 50%;
+    margin-left: 50px;
 }
 
 fieldset legend{

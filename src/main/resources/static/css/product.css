@@ -60,3 +60,8 @@
     background: darkorange;
     transition: 0.5s;
 }
+
+.adminButtons{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
